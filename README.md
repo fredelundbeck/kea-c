@@ -1,5 +1,5 @@
 # KEA-C :moyai:
-[![Author badge](https://img.shields.io/badge/Author-@Fliipzy-green?logo=Github&style=flat-square](https://github.com/Fliipzy)  
+[![Author badge](https://img.shields.io/badge/Author-@Fliipzy-green?logo=Github&style=flat-square)](https://github.com/Fliipzy)
 C assignments at KEA Computer Science 2020.
 
 
