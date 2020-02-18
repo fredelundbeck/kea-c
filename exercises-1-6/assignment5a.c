@@ -1,12 +1,5 @@
 /*
-Make a program where you input a character;
-If the character is an “a” or “A” the program will printout “Apple”;
-If the character is an “b” or “B” the program will printout “Banana”;
-If the character is an “c” or “C” the program will printout “Cherry”;
-If the character is an “d” or “D” the program will printout “Date”;
-If the character is an “e” or “E” the program will printout “Elderberry”;
-Otherwise the program will answer “I don’t know any fruit with a ” the entered letter.
-Use if-else.
+Now try to make the same program with a “switch” command.
 */
 
 #include <stdio.h>
