@@ -1,4 +1,5 @@
 /*
+Assignment text:
 Make a program where you input a character;
 If the character is an “a” or “A” the program will printout “Apple”;
 If the character is an “b” or “B” the program will printout “Banana”;

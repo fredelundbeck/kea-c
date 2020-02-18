@@ -1,4 +1,5 @@
 /*
+Assignment text:
 Now try to make the same program with a “switch” command.
 */
 

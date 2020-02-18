@@ -1,4 +1,5 @@
 /*
+Assignment text:
 Make a new program and use a ”while loop” this time.
 You can copy the code from assignment 4 and change what you want to change.
 */

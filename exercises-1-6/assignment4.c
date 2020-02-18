@@ -1,4 +1,5 @@
 /*
+Assignment text:
 int dage[] ={31,28,31,30,31,30,31,31,30,31,30,31}
 Make a program with a ”for loop” to make the printout.
 Month nr. 1 contains 31 days

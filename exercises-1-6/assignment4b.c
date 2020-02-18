@@ -1,4 +1,5 @@
 /*
+Assignment text:
 Make a new program and use at this time a ”do-while loop”
 */
 
