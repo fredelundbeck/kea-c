@@ -14,7 +14,7 @@ Again use pointer(s).
 
 #include <stdio.h>
 
-void print_int_array(int *numbers_ptr, int array_size);
+void print_int_array(int *numbers_ptr);
 
 int main(void)
 {
@@ -27,16 +27,20 @@ int main(void)
         *(n_ptr+i) = i+1;
     }
     
-    print_int_array(n_ptr, 100);
+    print_int_array(n_ptr);
 
     return 0;
 }
 
-void print_int_array(int *numbers_ptr, int array_size)
+void print_int_array(int *numbers_ptr)
 {
-    for (int i = 0; i < array_size; i++)
+    for (int i = 0; i < 10; i++)
     {
-        printf("%d ", *(numbers_ptr+i));
+        for (int j = 0; j < 10; j++)
+        {
+            printf("%d ", *(numbers_ptr + (i * 10) + j));
+        }
+        printf("\n");
     }
 }
 
