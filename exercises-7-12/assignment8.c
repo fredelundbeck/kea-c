@@ -50,10 +50,10 @@ What will the printout of this program be?
 > Array after sort:
 > 
 >
-> ar[0]=11
-> ar[1]=2
-> ar[2]=9
-> ar[3]=3
-> ar[4]=7
+> ar[0]=2
+> ar[1]=3
+> ar[2]=7
+> ar[3]=9
+> ar[4]=11
 
 */
