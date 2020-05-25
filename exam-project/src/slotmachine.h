@@ -59,7 +59,7 @@ It holds a maximum of 3 wheels.
 typedef struct slotmachine
 {   
     wheel_t wheels[MAX_WHEELS];
-    slotmachine_config_t settings;
+    slotmachine_config_t config;
     rule_t rules[];
 } slotmachine_t;
 
@@ -74,7 +74,7 @@ then initializes them with given arguments and returns
 the pointer.
 */
 
-slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t wheels[], rule_t rules[]);
+slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t wheels[], rule_t rules[], size_t rules_size);
 slotmachine_config_t* create_slotmachine_config (int spin_credit_price, float usd_credit_conversion);
 wheel_t* create_wheel (symbol_t symbols[]);
 rule_t* create_rule (symbol_t symbols[], int price);
