@@ -1,3 +1,7 @@
+# Visual Paradigm (UML)
+*.lck
+*.bak_*
+
 # Prerequisites
 *.d
 
