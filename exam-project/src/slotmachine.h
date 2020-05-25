@@ -24,7 +24,7 @@ It holds a maximum of 3 wheels.
 */
 typedef struct slotmachine
 {   
-    slotmachine_configuration_t settings;
+    slotmachine_config_t settings;
     wheel_t wheels[3];
 } slotmachine_t;
 
@@ -32,11 +32,11 @@ typedef struct slotmachine
 Represents the various settings in the slotmachine:
 US dollars to credit conversion, price per spin etc.
 */
-typedef struct slotmachine_configuration
+typedef struct slotmachine_config
 {
     int spin_credit_price;
     float usd_to_credit_conversion;
-} slotmachine_configuration_t;
+} slotmachine_config_t;
 
 /*
 This struct represents the wheel in the slotmachine.
@@ -63,7 +63,22 @@ typedef struct rule
 
 #pragma region type_functions
 
+/*
+The create functions for the slotmachine structures. 
+These functions all allocate memory, for each struct,
+then initializes them with given arguments and returns
+the pointer.
+*/
+slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t wheels[]);
+slotmachine_config_t *create_slotmachine_config (int spin_credit_price, float usd_credit_conversion);
+wheel_t *create_wheel (symbol symbols[]);
+rule_t *create_rule (symbol symbols[], int price);
 
+/*
+Creates a slotmachine struct with hardcoded values specific to the
+assignment requirements. See README for more information.
+*/
+slotmachine_t create_default_slotmachine ();
 
 #pragma endregion type_functions
 
