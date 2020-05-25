@@ -65,7 +65,7 @@ typedef struct slotmachine
 
 #pragma endregion type_definitions
 
-#pragma region type_functions
+#pragma region function_declarations
 
 /*
 The create functions for the slotmachine structures. 
@@ -90,6 +90,6 @@ Function which deallocates the allocated memory for the slotmachine
 */
 void destroy_slotmachine(slotmachine_t *slotmachine);
 
-#pragma endregion type_functions
+#pragma endregion function_declarations
 
 #endif // __SLOTMACHINE_H__

@@ -99,6 +99,15 @@ rule_t* create_rule (symbol_t symbols[], int price)
 
 slotmachine_t* create_default_slotmachine ()
 {
+    //Create symbol arrays for wheels
+    symbol_t symbols[MAX_SYMBOLS][MAX_WHEELS] = {
+        {APPLE},
+        {ORANGE},
+        {BAR}
+    };
+        
+    
+
     return NULL;
 }
 
