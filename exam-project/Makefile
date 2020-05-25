@@ -1,7 +1,10 @@
 CC=GCC 
 BIN=program.exe
-SOURCES=
+SOURCES= src/program.c src/slotmachine.c
 
-program: 
-	$(CC) src/program.c -o bin/$(BIN)
+program:
+	@$(CC) $(SOURCES) -o bin/$(BIN)
 
+run: 
+	@bin/$(BIN)
+	
