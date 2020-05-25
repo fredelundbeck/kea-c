@@ -2,7 +2,7 @@
 #define __SLOTMACHINE_H__
 
 #define MAX_WHEELS 3
-#define MAX_SYMBOLS 10
+#define MAX_SYMBOLS 20
 
 #pragma region type_definitons
 

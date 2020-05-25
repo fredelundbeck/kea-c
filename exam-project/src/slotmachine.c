@@ -100,19 +100,66 @@ rule_t* create_rule (symbol_t symbols[], int price)
 slotmachine_t* create_default_slotmachine ()
 {
     //Create symbol arrays for wheels
-    symbol_t symbols[MAX_SYMBOLS][MAX_WHEELS] = {
-        {APPLE},
-        {ORANGE},
-        {BAR}
+    symbol_t symbols[MAX_WHEELS][MAX_SYMBOLS] = {
+        { PLUM, BAR, BAR, BAR, LEMON, LEMON, BELL, APPLE, APPLE, APPLE, APPLE, APPLE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, CHERRY, CHERRY },
+        { PLUM, BAR, BAR, BELL, BELL, PLUM, APPLE, GRAPE, ORANGE, LEMON },
+        { PLUM, BAR, CHERRY, CHERRY, BELL, PLUM, APPLE, GRAPE, ORANGE, ORANGE } 
     };
         
-    
+    //Create wheel array & pass each wheel their corresponding symbol arrays
+    wheel_t* wheels[MAX_WHEELS] = {
+        create_wheel(symbols[0]),
+        create_wheel(symbols[1]),
+        create_wheel(symbols[2])
+    };
+
+    //Declare and assign slotmachine config variables.
+    int spin_credit_price = 5;
+    float usd_credit_conversion = 10;
+
+    //Create config struct with config variables.
+    slotmachine_config_t* config = create_slotmachine_config(spin_credit_price, usd_credit_conversion);
+
+    /* 
+    Create rule combinations for the rule structs below. 
+    -1 is a wildcard (connects with everything) 
+    */
+    symbol_t combinations[][MAX_WHEELS] = {
+        { CHERRY, -1, -1 },
+        { CHERRY, CHERRY, -1 },
+        { ORANGE, ORANGE, BAR },
+        { ORANGE, ORANGE, ORANGE },
+        { APPLE, APPLE, BAR },
+        { APPLE, APPLE, APPLE },
+        { BELL, BELL, BAR },
+        { BELL, BELL, BELL },
+        { LEMON, LEMON, BAR },
+        { LEMON, LEMON, LEMON },
+        { BAR, BAR, BAR },
+        { PLUM, PLUM, PLUM }
+    };
+
+    //Create rule arrays with combinations from above
+    rule_t* rules[] = {
+        create_rule(combinations[0], 2),
+        create_rule(combinations[1], 5),
+        create_rule(combinations[2], 10),
+        create_rule(combinations[3], 10),
+        create_rule(combinations[4], 14),
+        create_rule(combinations[5], 14),
+        create_rule(combinations[6], 18),
+        create_rule(combinations[7], 18),
+        create_rule(combinations[8], 50),
+        create_rule(combinations[9], 50),
+        create_rule(combinations[10], 50),
+        create_rule(combinations[11], 100),
+    };
 
     return NULL;
 }
 
 void destroy_slotmachine (slotmachine_t *slotmachine)
 {
-    //todo: find out if free'ing the slotmachine pointer is enough?
+    //TODO: find out if free'ing the slotmachine pointer is enough?
     free(slotmachine);
 }
