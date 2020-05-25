@@ -1,12 +1,15 @@
 #ifndef __SLOTMACHINE_H__
 #define __SLOTMACHINE_H__
 
+#define MAX_WHEELS 3
+#define MAX_SYMBOLS 10
+
 #pragma region type_definitons
 
 /*
 This enum represents each symbol available in the wheels.
 */
-typedef enum symbol 
+typedef enum 
 {
     APPLE,
     BAR
@@ -16,7 +19,7 @@ typedef enum symbol
     LEMON,
     ORANGE,
     PLUM,
-};
+} symbol_t;
 
 /*
 This struct represents the slotmachine.
@@ -25,7 +28,7 @@ It holds a maximum of 3 wheels.
 typedef struct slotmachine
 {   
     slotmachine_config_t settings;
-    wheel_t wheels[3];
+    wheel_t wheels[MAX_WHEELS];
 } slotmachine_t;
 
 /*
@@ -46,7 +49,7 @@ that tells which symbol is the current one.
 typedef struct wheel
 {
     int current_symbol;
-    symbol symbols[10];
+    symbol_t symbols[MAX_SYMBOLS];
 } wheel_t;
 
 /*
@@ -55,7 +58,7 @@ which order of symbols - when rolled - pays back.
 */
 typedef struct rule 
 {
-    symbol symbols[3];
+    symbol_t symbols[MAX_WHEELS];
     int price;
 } rule_t;
 
@@ -69,16 +72,16 @@ These functions all allocate memory, for each struct,
 then initializes them with given arguments and returns
 the pointer.
 */
-slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t wheels[]);
-slotmachine_config_t *create_slotmachine_config (int spin_credit_price, float usd_credit_conversion);
-wheel_t *create_wheel (symbol symbols[]);
-rule_t *create_rule (symbol symbols[], int price);
+slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t wheels[]);
+slotmachine_config_t* create_slotmachine_config (int spin_credit_price, float usd_credit_conversion);
+wheel_t* create_wheel (symbol_t symbols[]);
+rule_t* create_rule (symbol_t symbols[], int price);
 
 /*
 Creates a slotmachine struct with hardcoded values specific to the
 assignment requirements. See README for more information.
 */
-slotmachine_t create_default_slotmachine ();
+slotmachine_t* create_default_slotmachine ();
 
 #pragma endregion type_functions
 
