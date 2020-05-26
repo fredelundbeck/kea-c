@@ -58,7 +58,7 @@ typedef struct rule
 
 /*
 This struct represents the slotmachine.
-It holds a maximum of 3 wheels.
+It holds a maximum of 3 wheel pointers.
 */
 typedef struct slotmachine
 {   

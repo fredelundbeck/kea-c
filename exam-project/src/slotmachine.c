@@ -36,12 +36,11 @@ slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t* wheels[
 
 slotmachine_config_t create_slotmachine_config (int spin_credit_price, float usd_credit_conversion)
 {
-    slotmachine_config_t config; /* = {
+    //Declare and initialize slotmachine config struct
+    slotmachine_config_t config = {
         .spin_credit_price = spin_credit_price,
         .usd_to_credit_conversion = usd_credit_conversion
-    }; */
-    config.spin_credit_price = 2;
-    config.usd_to_credit_conversion = 3;
+    }; 
     
     return config;
 }
@@ -72,7 +71,7 @@ wheel_t* create_wheel (symbol_t symbols[])
 
 rule_t create_rule (symbol_t symbols[], int price)
 {
-    
+    //Declare and initialize rule struct
     rule_t rule = {
         .price = price,
     };
@@ -94,9 +93,14 @@ slotmachine_t* create_default_slotmachine ()
 
     //Create symbol arrays for wheels
     symbol_t symbols[MAX_WHEELS][MAX_SYMBOLS] = {
-        { PLUM, BAR, BAR, BAR, LEMON, LEMON, BELL, APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, CHERRY, CHERRY },
-        { PLUM, BAR, BAR, LEMON, LEMON, BELL, BELL, BELL, BELL, BELL, APPLE, APPLE, ORANGE, ORANGE, ORANGE, CHERRY, CHERRY, CHERRY, CHERRY, CHERRY },
-        { PLUM, BAR, LEMON, LEMON, BELL, BELL, BELL, BELL, BELL, BELL, BELL, BELL, APPLE, APPLE, ORANGE, ORANGE, GRAPE, GRAPE, GRAPE, GRAPE } 
+        { PLUM, BAR, BAR, BAR, LEMON, LEMON, BELL, APPLE, APPLE, APPLE, APPLE,
+        APPLE, APPLE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, CHERRY, CHERRY },
+
+        { PLUM, BAR, BAR, LEMON, LEMON, BELL, BELL, BELL, BELL, BELL, APPLE, APPLE, 
+        ORANGE, ORANGE, ORANGE, CHERRY, CHERRY, CHERRY, CHERRY, CHERRY },
+
+        { PLUM, BAR, LEMON, LEMON, BELL, BELL, BELL, BELL, BELL, BELL, BELL,
+        BELL, APPLE, APPLE, ORANGE, ORANGE, GRAPE, GRAPE, GRAPE, GRAPE } 
     };
         
     //Create wheel array & pass each wheel their corresponding symbol arrays
@@ -156,7 +160,7 @@ slotmachine_t* create_default_slotmachine ()
 
 void destroy_slotmachine (slotmachine_t *slotmachine)
 {
-    //Free every struct pointer from the slotmachine & itself at last.
+    //Free every wheel struct first, then free slotmachine itself.
     free(slotmachine->wheels);
     free(slotmachine);
 }
