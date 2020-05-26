@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "slotmachine.h"
 
-slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t wheels[], rule_t rules[], size_t rules_size)
+slotmachine_t* create_slotmachine (slotmachine_config_t* config, wheel_t* wheels[], rule_t* rules[], size_t rules_size)
 {
     //Allocate dynamic memory for the slotmachine struct.
     slotmachine_t* slotmachine = malloc(sizeof(slotmachine_t));
@@ -152,14 +152,20 @@ slotmachine_t* create_default_slotmachine ()
         create_rule(combinations[8], 50),
         create_rule(combinations[9], 50),
         create_rule(combinations[10], 50),
-        create_rule(combinations[11], 100),
+        create_rule(combinations[11], 100)
     };
 
-    return NULL;
+    //Create the slotmachine struct with above data
+    slotmachine_t* slotmachine = create_slotmachine(config, wheels, rules, sizeof(rules) / sizeof(rule_t));
+
+    return slotmachine;
 }
 
 void destroy_slotmachine (slotmachine_t *slotmachine)
 {
-    //TODO: find out if free'ing the slotmachine pointer is enough?
+    //Free every struct pointer from the slotmachine & itself at last.
+    free(slotmachine->config);
+    free(slotmachine->rules);
+    free(slotmachine->wheels);
     free(slotmachine);
 }
