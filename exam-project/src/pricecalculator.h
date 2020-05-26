@@ -1,6 +1,0 @@
-#ifndef __PRICECALCULATOR_H__
-#define __PRICECALCULATOR_H__
-
-
-
-#endif // __PRICECALCULATOR_H__
