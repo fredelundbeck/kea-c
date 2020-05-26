@@ -1,10 +1,14 @@
 #include <stdlib.h>
 #include "slotmachine.h"
 
-slotmachine_t* create_slotmachine (slotmachine_config_t* config, wheel_t* wheels[], rule_t* rules[], size_t rules_size)
+slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t* wheels[], rule_t rules[], size_t rules_size)
 {
-    //Allocate dynamic memory for the slotmachine struct.
-    slotmachine_t* slotmachine = malloc(sizeof(slotmachine_t));
+    /* 
+    Allocate dynamic memory for the slotmachine struct.
+    Because we use a flexible array member in the struct, we need to allocate
+    extra memory for that array e.g ".. + sizeof(rule_t) * rules_size"
+    */
+    slotmachine_t* slotmachine = malloc(sizeof(slotmachine_t) + sizeof(rule_t) * rules_size);
 
     //Check if we're out of memory.
     if (slotmachine == NULL)
@@ -18,8 +22,8 @@ slotmachine_t* create_slotmachine (slotmachine_config_t* config, wheel_t* wheels
     //Assign wheels array to passed wheels.
     for (size_t i = 0; i < MAX_WHEELS; i++)
     {
-        slotmachine->wheels[i] = wheels[i];
-    }
+        slotmachine->wheels[i] = wheels[i]; 
+    } 
     
     //Assign rules array to passed rules.
     for (size_t i = 0; i < rules_size; i++)
@@ -30,23 +34,15 @@ slotmachine_t* create_slotmachine (slotmachine_config_t* config, wheel_t* wheels
     return slotmachine;
 }
 
-slotmachine_config_t* create_slotmachine_config (int spin_credit_price, float usd_credit_conversion)
+slotmachine_config_t create_slotmachine_config (int spin_credit_price, float usd_credit_conversion)
 {
-    //Allocate dynamic memory for the slotmachine-config struct.
-    slotmachine_config_t* config = malloc(sizeof(slotmachine_config_t));
-
-    //Check if we're out of memory.
-    if (config == NULL)
-    {
-        return NULL;
-    }
+    slotmachine_config_t config; /* = {
+        .spin_credit_price = spin_credit_price,
+        .usd_to_credit_conversion = usd_credit_conversion
+    }; */
+    config.spin_credit_price = 2;
+    config.usd_to_credit_conversion = 3;
     
-    //Assign spin credit price to corresponding argument.
-    config->spin_credit_price = spin_credit_price;
-
-    //Assign USD credit conversion to corresponding struct.
-    config->usd_to_credit_conversion = usd_credit_conversion;
-
     return config;
 }
 
@@ -74,24 +70,17 @@ wheel_t* create_wheel (symbol_t symbols[])
     return wheel;
 }
 
-rule_t* create_rule (symbol_t symbols[], int price)
+rule_t create_rule (symbol_t symbols[], int price)
 {
-    //Allocate dynamic memory for the rule struct.
-    rule_t* rule = malloc(sizeof(rule_t));
-
-    //Check if we're out of memory.
-    if (rule == NULL)
-    {
-        return NULL;
-    }
-
-    //Assign price to passed price.
-    rule->price = price;
+    
+    rule_t rule = {
+        .price = price,
+    };
 
     //Assign symbols array to passed symbols.
     for (size_t i = 0; i < MAX_WHEELS; i++)
     {
-        rule->symbols[i] = symbols[i];
+        rule.symbols[i] = symbols[i];
     }
     
     return rule;
@@ -99,6 +88,10 @@ rule_t* create_rule (symbol_t symbols[], int price)
 
 slotmachine_t* create_default_slotmachine ()
 {
+    /*
+    Clarification for a lot of these magic values can be read in the doc folder. 
+    */
+
     //Create symbol arrays for wheels
     symbol_t symbols[MAX_WHEELS][MAX_SYMBOLS] = {
         { PLUM, BAR, BAR, BAR, LEMON, LEMON, BELL, APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, CHERRY, CHERRY },
@@ -118,7 +111,7 @@ slotmachine_t* create_default_slotmachine ()
     float usd_credit_conversion = 10;
 
     //Create config struct with config variables.
-    slotmachine_config_t* config = create_slotmachine_config(spin_credit_price, usd_credit_conversion);
+    slotmachine_config_t config = create_slotmachine_config(spin_credit_price, usd_credit_conversion);
 
     /* 
     Create rule combinations for the rule structs below. 
@@ -140,7 +133,7 @@ slotmachine_t* create_default_slotmachine ()
     };
 
     //Create rule arrays with combinations from above
-    rule_t* rules[] = {
+    rule_t rules[] = {
         create_rule(combinations[0], 2),
         create_rule(combinations[1], 5),
         create_rule(combinations[2], 10),
@@ -164,8 +157,6 @@ slotmachine_t* create_default_slotmachine ()
 void destroy_slotmachine (slotmachine_t *slotmachine)
 {
     //Free every struct pointer from the slotmachine & itself at last.
-    free(slotmachine->config);
-    free(slotmachine->rules);
     free(slotmachine->wheels);
     free(slotmachine);
 }
