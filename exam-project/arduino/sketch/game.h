@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void play();
+void display_start_prompt();
 
 #ifdef __cplusplus
 } //extern "C"
