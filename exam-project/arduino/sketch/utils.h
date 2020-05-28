@@ -7,6 +7,11 @@ extern "C" {
 
 String get_string_from_serial();
 
+/*
+Enters a loop until a serial input has been captured.
+Returns the parsed serial input. If input is not an integer
+0 will be returned.
+*/
 int get_int();
 
 /*
@@ -32,6 +37,36 @@ detected/read from given pin.
 @param delay_ms: The delay in milliseconds each loop iteration.
 */
 void wait_for_btn_push(uint8_t pin, unsigned long delay_ms);
+
+/*
+Turns on the red led.
+*/
+void led_red_on();
+
+/*
+Turns on the yellow led.
+*/
+void led_ylw_on();
+
+/*
+Turns on the green led.
+*/
+void led_grn_on();
+
+/*
+Turns off the red led.
+*/
+void led_red_off();
+
+/*
+Turns off the yellow led.
+*/
+void led_ylw_off();
+
+/*
+Turns off the green led.
+*/
+void led_grn_off();
 
 #ifdef __cplusplus
 } //extern "C"

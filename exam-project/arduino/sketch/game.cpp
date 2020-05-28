@@ -1,28 +1,61 @@
 #include <Arduino.h>
 #include "game.h"
 #include "utils.h"
+#include "ardsetup.h"
+#include "session.h"
+
+#define USD_CRED_CONV 3
+
+session_t* session;  
 
 void start_prompt()
 {   
     //Prompt the welcome screen.
-    Serial.println(":: ONE ARMED BANDIT (ARDUINO EDITION) 🍒🍒🍒 ::\n\
+    Serial.println(":: 𝗢𝗡𝗘 𝗔𝗥𝗠𝗘𝗗 𝗕𝗔𝗡𝗗𝗜𝗧 (𝗔𝗥𝗗𝗨𝗜𝗡𝗢 𝗘𝗗𝗜𝗧𝗜𝗢𝗡) 🍒🍒🍒 ::\n\
 Version 1.0.0\n\n\
 Press [button] to continue...\n");
     
     //Wait for button push before continuing.
-    wait_for_btn_push(9, 50);
+    wait_for_btn_push(BTN_PIN, 50);
 
-    //Ask the user how many USD they wanna convert to credits.
-    Serial.println("\n\nHow many USD do you wanna convert to credits?");
+    //Display the menu prompt and get operation code
+    int menu_op = menu_prompt();
 
-    //Get int from serial monitor.
-    int usd = get_int_from_serial(); 
-
-    Serial.print("You answer was ");
-    Serial.print(usd);
-    Serial.println(" $");
-
+    //If user choose exit_op return now
+    if (menu_op == 3)
+    {
+        Serial.println("[✔] Goodbye!");
+        return;
+    }
     
+    //Ask the user how many USD they wanna convert to credits.
+    Serial.println("\n[❓] How many USD do you wanna convert to credits?");
+
+    //Force integer input from serial
+    uint16_t usd = get_int_range_force(1, 1000, 
+    "[✖] Whoops, you need to input an integer value between [1, 1000]");
+
+    //Prompt the USD to credit conversion
+    Serial.print("[✔] ");
+    Serial.print(usd);
+    Serial.print("$ is ");
+    Serial.print(usd * USD_CRED_CONV);
+    Serial.print(" credits, enjoy!");
+
+    //Initialize session
+    session = create_session(usd);
+}
+
+int menu_prompt()
+{   
+    //Display menu text
+    Serial.println("░▒▓█ 𝗚𝗔𝗠𝗘 𝗠𝗘𝗡𝗨 █▓▒░\n\
+[𝟭] Play with button mode\n\
+[𝟮] Play with auto spin\n\
+[𝟯] Exit\n");
+
+    //Get menu operation and return it
+    return get_int_range_force(1, 3, "[✖] You need to choose one of the options!");
 }
 
 

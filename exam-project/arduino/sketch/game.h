@@ -13,6 +13,8 @@ input to setup the game with.
 */
 void start_prompt();
 
+int menu_prompt();
+
 /*
 This function starts a sequence prompting the
 player if they wanna continue playing. Then it
