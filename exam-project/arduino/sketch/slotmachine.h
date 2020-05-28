@@ -91,6 +91,8 @@ That also means every struct that slotmachine has a pointer to.
 */
 void destroy_slotmachine(slotmachine_t *slotmachine);
 
+void spin_wheel(wheel_t* wheel);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

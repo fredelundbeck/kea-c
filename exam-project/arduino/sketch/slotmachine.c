@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "slotmachine.h"
+#include "random.h"
 
 slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t* wheels[], rule_t rules[], size_t rules_size)
 {
@@ -163,4 +164,10 @@ void destroy_slotmachine (slotmachine_t *slotmachine)
     //Free every wheel struct first, then free slotmachine itself.
     free(slotmachine->wheels);
     free(slotmachine);
+}
+
+void spin_wheel(wheel_t* wheel)
+{
+    //Set current symbol to random symbol in slotmachine->symbols 
+    wheel->current_symbol = get_random_int(1, MAX_SYMBOLS);
 }

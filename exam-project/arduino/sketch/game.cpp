@@ -6,6 +6,8 @@
 #include "slotmachine.h"
 #include "session.h"
 
+#define SPIN_LENGTH_MS 1000;
+
 session_t* session;
 slotmachine_t* slotmachine;
 
@@ -81,7 +83,12 @@ void start_game_loop(bool button_mode)
             wait_for_btn_push(BTN_PIN, 50);
         }
 
-        //Perform the slotmachine spins
+        //For each wheel in slotmachine
+        for (size_t i = 0; i < MAX_WHEELS; i++)
+        {
+            //Spin wheel
+            spin_wheel(slotmachine->wheels[i]);
+        }
         
 
         //Decrement credits by spin price
