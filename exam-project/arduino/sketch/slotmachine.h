@@ -7,6 +7,7 @@ extern "C" {
 
 #define MAX_WHEELS 3
 #define MAX_SYMBOLS 20
+#define STD_USD_CRED_CNV 3
 
 /*
 This enum represents each symbol available in the wheels.

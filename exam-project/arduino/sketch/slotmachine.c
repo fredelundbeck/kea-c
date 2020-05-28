@@ -112,7 +112,7 @@ slotmachine_t* create_default_slotmachine ()
 
     //Declare and assign slotmachine config variables.
     int spin_credit_price = 5;
-    float usd_credit_conversion = 3;
+    float usd_credit_conversion = STD_USD_CRED_CNV;
 
     //Create config struct with config variables.
     slotmachine_config_t config = create_slotmachine_config(spin_credit_price, usd_credit_conversion);

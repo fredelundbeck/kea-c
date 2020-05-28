@@ -6,8 +6,6 @@
 #include "slotmachine.h"
 #include "session.h"
 
-#define USD_CRED_CONV 3
-
 session_t* session;
 slotmachine_t* slotmachine;
 
@@ -35,14 +33,14 @@ Press [button] to continue...\n");
     Serial.println("\n[❓] How many USD do you wanna convert to credits?");
 
     //Force integer input from serial
-    uint16_t usd = get_int_range_force(1, 1000, 
-    "[✖] Whoops, you need to input an integer value between [1, 1000]");
+    uint16_t usd = get_int_range_force(1, 200, 
+    "[✖] Whoops, you need to input an integer value between [1, 200]");
 
     //Prompt the USD to credit conversion
     Serial.print("[✔] ");
     Serial.print(usd);
     Serial.print("$ is ");
-    Serial.print(usd * USD_CRED_CONV);
+    Serial.print(usd * STD_USD_CRED_CNV);
     Serial.print(" credits, enjoy!\n");
 
     //Initialize session & slotmachine
@@ -73,6 +71,22 @@ bool continue_prompt()
 
 void start_game_loop(bool button_mode)
 {
+    //While user has enough credits to keep spinning
+    while (session->credits >= slotmachine->config.spin_credit_price)
+    {
+        //If user chose button mode
+        if (button_mode)
+        {
+            //Wait for button click before continuing
+            wait_for_btn_push(BTN_PIN, 50);
+        }
+
+        //Perform the slotmachine spins
+        
+
+        //Decrement credits by spin price
+        session->credits -= slotmachine->config.spin_credit_price;
+    }
     
 }
 
