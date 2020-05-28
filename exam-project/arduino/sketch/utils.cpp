@@ -9,12 +9,26 @@ String get_string_from_serial()
     return Serial.readString();
 }
 
-int get_int_from_serial()
+int get_int()
 {
     while (Serial.available() == 0)
     {
     }
     return Serial.parseInt();
+}
+
+int get_int_range_force(int min, int max, char* err_msg)
+{
+    while (true)
+    {
+        int input = get_int();
+        if (input >= min && input <= max)
+        {
+            return input;
+        }
+        Serial.println(err_msg);
+    }
+       
 }
 
 void wait_for_btn_push(uint8_t pin, unsigned long delay_ms)
