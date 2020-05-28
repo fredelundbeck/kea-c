@@ -1,12 +1,15 @@
 #include <Arduino.h>
+#include <stdlib.h>
 #include "game.h"
 #include "utils.h"
 #include "ardsetup.h"
+#include "slotmachine.h"
 #include "session.h"
 
 #define USD_CRED_CONV 3
 
-session_t* session;  
+session_t* session;
+slotmachine_t* slotmachine;
 
 void start_prompt()
 {   
@@ -40,10 +43,14 @@ Press [button] to continue...\n");
     Serial.print(usd);
     Serial.print("$ is ");
     Serial.print(usd * USD_CRED_CONV);
-    Serial.print(" credits, enjoy!");
+    Serial.print(" credits, enjoy!\n");
 
-    //Initialize session
+    //Initialize session & slotmachine
     session = create_session(usd);
+    slotmachine = create_default_slotmachine();
+
+    //Start the game 
+    start_game_loop(menu_op == 1 ? true : false);
 }
 
 int menu_prompt()
@@ -62,5 +69,10 @@ int menu_prompt()
 bool continue_prompt()
 {
 
+}
+
+void start_game_loop(bool button_mode)
+{
+    
 }
 

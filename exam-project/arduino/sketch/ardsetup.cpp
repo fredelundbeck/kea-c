@@ -1,8 +1,6 @@
 #include <Arduino.h>
 #include "ardsetup.h"
 
-
-
 void setup_arduino()
 {
     //Setup bit rate 

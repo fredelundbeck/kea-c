@@ -34,7 +34,7 @@ slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t* wheels[
     return slotmachine;
 }
 
-slotmachine_config_t create_slotmachine_config (int spin_credit_price, float usd_credit_conversion)
+slotmachine_config_t create_slotmachine_config (int spin_credit_price, int usd_credit_conversion)
 {
     //Declare and initialize slotmachine config struct
     slotmachine_config_t config = {
@@ -112,7 +112,7 @@ slotmachine_t* create_default_slotmachine ()
 
     //Declare and assign slotmachine config variables.
     int spin_credit_price = 5;
-    float usd_credit_conversion = 10;
+    float usd_credit_conversion = 3;
 
     //Create config struct with config variables.
     slotmachine_config_t config = create_slotmachine_config(spin_credit_price, usd_credit_conversion);
