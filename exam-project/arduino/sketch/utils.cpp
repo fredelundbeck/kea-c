@@ -8,6 +8,24 @@ String get_string_from_serial()
     return Serial.readString();
 }
 
+bool get_yes_no_answer_force(char *err_msg)
+{
+    while (true)
+    {
+        String answer = get_string_from_serial();
+        if (answer[0] == 'y' || answer[0] == 'Y')
+        {
+            return true;
+        }
+        else if (answer[0] == 'n' || answer[0] == 'N')
+        {
+            return false;
+        }
+        Serial.println(err_msg);
+    }
+    
+}
+
 int get_int()
 {
     //While bits aren't being communicated

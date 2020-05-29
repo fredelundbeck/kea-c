@@ -11,7 +11,7 @@ regarding welcoming the player. First it
 prompts a welcome screen, then it asks for
 input to setup the game with.
 */
-void start_prompt();
+bool start_prompt();
 
 /*
 This function starts the menu sequence. 
@@ -33,7 +33,7 @@ bool continue_prompt();
 /*
 This function starts the main game loop.
 */
-void start_game_loop(bool button_mode);
+void spin_loop(bool button_mode);
 
 #ifdef __cplusplus
 } //extern "C"

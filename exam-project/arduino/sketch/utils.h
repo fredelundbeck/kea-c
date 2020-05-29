@@ -7,6 +7,8 @@ extern "C" {
 
 String get_string_from_serial();
 
+bool get_yes_no_answer_force(char *err_msg);
+
 /*
 Enters a loop until a serial input has been captured.
 Returns the parsed serial input. If input is not an integer

@@ -7,7 +7,7 @@ extern "C" {
 
 #define MAX_WHEELS 3
 #define MAX_SYMBOLS 20
-#define STD_USD_CRED_CNV 3
+#define STD_USD_CRED_CNV 5
 
 /*
 This enum represents each symbol available in the wheels.
@@ -18,10 +18,10 @@ typedef enum symbol
     BAR,
     BELL,
     CHERRY,
-    GRAPE,
+    PEAR,
     LEMON,
     ORANGE,
-    PLUM
+    GRAPES
 } symbol_t;
 
 /*
@@ -30,8 +30,8 @@ US dollars to credit conversion, price per spin etc.
 */
 typedef struct slotmachine_config
 {
-    int spin_credit_price;
-    int usd_to_credit_conversion;
+    unsigned char spin_credit_price;
+    unsigned char usd_to_credit_conversion;
 } slotmachine_config_t;
 
 /*
@@ -52,7 +52,7 @@ which order of symbols - when rolled - pays back.
 typedef struct rule 
 {
     symbol_t symbols[MAX_WHEELS];
-    unsigned short int price;
+    unsigned short price;
 } rule_t;
 
 /*
@@ -75,9 +75,9 @@ then initializes them with given arguments and returns
 the pointer.
 */
 slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[], rule_t rules[], unsigned char rules_size);
-slotmachine_config_t create_slotmachine_config (int spin_credit_price, int usd_credit_conversion);
+slotmachine_config_t create_slotmachine_config (unsigned char spin_credit_price, unsigned char usd_credit_conversion);
 wheel_t *create_wheel (symbol_t symbols[]);
-rule_t create_rule (symbol_t symbols[], unsigned short int price);
+rule_t create_rule (symbol_t symbols[], unsigned short price);
 
 /*
 Creates a slotmachine struct with hardcoded values specific to the
@@ -99,6 +99,13 @@ from that wheels symbols array.
 @param wheel: the wheel to spin.
 */
 void spin_wheel(wheel_t *wheel);
+
+/*
+Returns the string value (name) of the symbol.
+
+@param symbol: the symbol to get the name from.
+*/
+char *get_symbol_name(symbol_t symbol);
 
 
 #ifdef __cplusplus

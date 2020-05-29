@@ -36,7 +36,7 @@ slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[
     return slotmachine;
 }
 
-slotmachine_config_t create_slotmachine_config (int spin_credit_price, int usd_credit_conversion)
+slotmachine_config_t create_slotmachine_config (unsigned char spin_credit_price, unsigned char usd_credit_conversion)
 {
     //Declare and initialize slotmachine config struct
     slotmachine_config_t config = {
@@ -95,14 +95,14 @@ slotmachine_t *create_default_slotmachine ()
 
     //Create symbol arrays for wheels
     symbol_t symbols[MAX_WHEELS][MAX_SYMBOLS] = {
-        { PLUM, BAR, BAR, BAR, LEMON, LEMON, BELL, APPLE, APPLE, APPLE, APPLE,
+        { GRAPES, BAR, BAR, BAR, LEMON, LEMON, BELL, APPLE, APPLE, APPLE, APPLE,
         APPLE, APPLE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, CHERRY, CHERRY },
 
-        { PLUM, BAR, BAR, LEMON, LEMON, BELL, BELL, BELL, BELL, BELL, APPLE, APPLE, 
+        { GRAPES, BAR, BAR, LEMON, LEMON, BELL, BELL, BELL, BELL, BELL, APPLE, APPLE, 
         ORANGE, ORANGE, ORANGE, CHERRY, CHERRY, CHERRY, CHERRY, CHERRY },
 
-        { PLUM, BAR, LEMON, LEMON, BELL, BELL, BELL, BELL, BELL, BELL, BELL,
-        BELL, APPLE, APPLE, ORANGE, ORANGE, GRAPE, GRAPE, GRAPE, GRAPE } 
+        { GRAPES, BAR, LEMON, LEMON, BELL, BELL, BELL, BELL, BELL, BELL, BELL,
+        BELL, APPLE, APPLE, ORANGE, ORANGE, PEAR, PEAR, PEAR, PEAR } 
     };
         
     //Create wheel array & pass each wheel their corresponding symbol arrays
@@ -113,8 +113,8 @@ slotmachine_t *create_default_slotmachine ()
     };
 
     //Declare and assign slotmachine config variables.
-    int spin_credit_price = 5;
-    float usd_credit_conversion = STD_USD_CRED_CNV;
+    unsigned char spin_credit_price = 5;
+    unsigned char usd_credit_conversion = STD_USD_CRED_CNV;
 
     //Create config struct with config variables.
     slotmachine_config_t config = create_slotmachine_config(spin_credit_price, usd_credit_conversion);
@@ -135,13 +135,13 @@ slotmachine_t *create_default_slotmachine ()
         { LEMON, LEMON, BAR },
         { LEMON, LEMON, LEMON },
         { BAR, BAR, BAR },
-        { PLUM, PLUM, PLUM }
+        { GRAPES, GRAPES, GRAPES }
     };
 
     //Create rule arrays with combinations from above
     rule_t rules[] = {
-        create_rule(combinations[0], 2),
-        create_rule(combinations[1], 5),
+        create_rule(combinations[0], 3),
+        create_rule(combinations[1], 7),
         create_rule(combinations[2], 10),
         create_rule(combinations[3], 10),
         create_rule(combinations[4], 14),
@@ -170,5 +170,30 @@ void destroy_slotmachine (slotmachine_t *slotmachine)
 void spin_wheel(wheel_t *wheel)
 {
     //Set current symbol to random symbol in slotmachine->symbols 
-    wheel->current_symbol = get_random_int(1, MAX_SYMBOLS);
+    wheel->current_symbol = wheel->symbols[get_random_int(0, MAX_SYMBOLS - 1)];
+}
+
+char *get_symbol_name(symbol_t symbol)
+{
+    switch (symbol)
+    {   
+        case 0:
+            return "[APPLE 🍎]";
+        case 1:
+            return "[BAR 🅱]";
+        case 2:
+            return "[BELL 🛎]";
+        case 3:
+            return "[CHERRY 🍒]";
+        case 4:
+            return "[PEAR 🍐]";
+        case 5:
+            return "[LEMON 🍋]";
+        case 6:
+            return "[ORANGE 🍊]";
+        case 7:
+            return "[GRAPES 🍇]";
+        default:
+            return NULL;
+    }
 }

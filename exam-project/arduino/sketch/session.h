@@ -7,14 +7,15 @@ extern "C" {
 
 typedef struct session
 {
-    unsigned int credits;
-    unsigned int spins_total;
+    unsigned short credits;
+    unsigned short spins_total;
+    unsigned char biggest_win;
     unsigned short longest_win_streak;
     unsigned short longest_loss_streak;
-    unsigned char plum_bonusses_hit;
+    unsigned char grapes_bonus_hits;
 } session_t;
 
-session_t *create_session(int credits);
+session_t *create_session(unsigned short credits);
 
 #ifdef __cplusplus
 } //extern C
