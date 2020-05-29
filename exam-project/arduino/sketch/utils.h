@@ -27,7 +27,7 @@ range: min ≤ x ≤ max == [min, max]
 @param err_msg: the message to be displayed if the captured value
 does not lie in the range.
 */
-int get_int_range_force(int min, int max, char* err_msg);
+int get_int_range_force(int min, int max, char *err_msg);
 
 /*
 Enters a loop until a HIGH (0x1) digital input is 

@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include "session.h"
 
-session_t* create_session(int credits)
+session_t *create_session(int credits)
 {   
     /* 
     Allocate dynamic memory for the session struct.
     */
-    session_t* session = malloc(sizeof(session_t));
+    session_t *session = malloc(sizeof(session_t));
 
     //Check if we're out of memory
     if (session == NULL)

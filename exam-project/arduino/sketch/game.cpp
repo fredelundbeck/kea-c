@@ -6,10 +6,11 @@
 #include "slotmachine.h"
 #include "session.h"
 
-#define SPIN_LENGTH_MS 1000;
+#define MAX_AUTO_SPINS 100
+#define SPIN_LENGTH_MS 1000
 
-session_t* session;
-slotmachine_t* slotmachine;
+session_t *session;
+slotmachine_t *slotmachine;
 
 void start_prompt()
 {   
@@ -46,7 +47,7 @@ Press [button] to continue...\n");
     Serial.print(" credits, enjoy!\n");
 
     //Initialize session & slotmachine
-    session = create_session(usd);
+    session = create_session(usd * STD_USD_CRED_CNV);
     slotmachine = create_default_slotmachine();
 
     //Start the game 
@@ -76,11 +77,18 @@ void start_game_loop(bool button_mode)
     //While user has enough credits to keep spinning
     while (session->credits >= slotmachine->config.spin_credit_price)
     {
+        //Increment session spins total
+        session->spins_total += 1;
+
         //If user chose button mode
         if (button_mode)
         {
+            //Prompt user to press button
+            Serial.println("[🍒] Press button to spin wheels!");
+
             //Wait for button click before continuing
             wait_for_btn_push(BTN_PIN, 50);
+            delay(100);
         }
 
         //For each wheel in slotmachine
@@ -89,11 +97,20 @@ void start_game_loop(bool button_mode)
             //Spin wheel
             spin_wheel(slotmachine->wheels[i]);
         }
-        
 
+        //Check if there's any winnings
+        
         //Decrement credits by spin price
         session->credits -= slotmachine->config.spin_credit_price;
+
+        //If session total spins has reached MAX_AUTO_SPIN
+        if (session->spins_total % MAX_AUTO_SPINS == 0)
+        {
+            Serial.print("[❓] You have spinned ");
+            Serial.print(MAX_AUTO_SPINS);
+            Serial.println(" times. Continue? y/n");
+            break;
+        }        
     }
-    
 }
 

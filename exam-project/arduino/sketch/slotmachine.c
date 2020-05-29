@@ -2,14 +2,14 @@
 #include "slotmachine.h"
 #include "random.h"
 
-slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t* wheels[], rule_t rules[], size_t rules_size)
+slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[], rule_t rules[], size_t rules_size)
 {
     /* 
     Allocate dynamic memory for the slotmachine struct.
     Because we use a flexible array member in the struct, we need to allocate
     extra memory for that array e.g ".. + sizeof(rule_t) * rules_size"
     */
-    slotmachine_t* slotmachine = malloc(sizeof(slotmachine_t) + sizeof(rule_t) * rules_size);
+    slotmachine_t *slotmachine = malloc(sizeof(slotmachine_t) + sizeof(rule_t) * rules_size);
 
     //Check if we're out of memory.
     if (slotmachine == NULL)
@@ -46,7 +46,7 @@ slotmachine_config_t create_slotmachine_config (int spin_credit_price, int usd_c
     return config;
 }
 
-wheel_t* create_wheel (symbol_t symbols[])
+wheel_t *create_wheel (symbol_t symbols[])
 {
     //Allocate dynamic memory for the wheel struct.
     wheel_t* wheel = malloc(sizeof(wheel_t));
@@ -86,7 +86,7 @@ rule_t create_rule (symbol_t symbols[], int price)
     return rule;
 }
 
-slotmachine_t* create_default_slotmachine ()
+slotmachine_t *create_default_slotmachine ()
 {
     /*
     Clarification for a lot of these magic values can be read in the doc folder. 
@@ -105,7 +105,7 @@ slotmachine_t* create_default_slotmachine ()
     };
         
     //Create wheel array & pass each wheel their corresponding symbol arrays
-    wheel_t* wheels[MAX_WHEELS] = {
+    wheel_t *wheels[MAX_WHEELS] = {
         create_wheel(symbols[0]),
         create_wheel(symbols[1]),
         create_wheel(symbols[2])
@@ -154,7 +154,7 @@ slotmachine_t* create_default_slotmachine ()
     };
 
     //Create the slotmachine struct with above data
-    slotmachine_t* slotmachine = create_slotmachine(config, wheels, rules, sizeof(rules) / sizeof(rule_t));
+    slotmachine_t *slotmachine = create_slotmachine(config, wheels, rules, sizeof(rules) / sizeof(rule_t));
 
     return slotmachine;
 }
@@ -166,7 +166,7 @@ void destroy_slotmachine (slotmachine_t *slotmachine)
     free(slotmachine);
 }
 
-void spin_wheel(wheel_t* wheel)
+void spin_wheel(wheel_t *wheel)
 {
     //Set current symbol to random symbol in slotmachine->symbols 
     wheel->current_symbol = get_random_int(1, MAX_SYMBOLS);

@@ -61,7 +61,7 @@ It holds a maximum of 3 wheel pointers.
 */
 typedef struct slotmachine
 {   
-    wheel_t* wheels[MAX_WHEELS];
+    wheel_t *wheels[MAX_WHEELS];
     slotmachine_config_t config;
     //Flexible array member feature with C99
     rule_t rules[]; 
@@ -74,9 +74,9 @@ then initializes them with given arguments and returns
 the pointer.
 */
 
-slotmachine_t* create_slotmachine (slotmachine_config_t config, wheel_t* wheels[], rule_t rules[], size_t rules_size);
+slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[], rule_t rules[], size_t rules_size);
 slotmachine_config_t create_slotmachine_config (int spin_credit_price, int usd_credit_conversion);
-wheel_t* create_wheel (symbol_t symbols[]);
+wheel_t *create_wheel (symbol_t symbols[]);
 rule_t create_rule (symbol_t symbols[], int price);
 
 /*
@@ -91,7 +91,7 @@ That also means every struct that slotmachine has a pointer to.
 */
 void destroy_slotmachine(slotmachine_t *slotmachine);
 
-void spin_wheel(wheel_t* wheel);
+void spin_wheel(wheel_t *wheel);
 
 #ifdef __cplusplus
 } // extern "C"

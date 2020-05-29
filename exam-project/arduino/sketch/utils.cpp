@@ -15,7 +15,7 @@ int get_int()
     return Serial.parseInt();
 }
 
-int get_int_range_force(int min, int max, char* err_msg)
+int get_int_range_force(int min, int max, char *err_msg)
 {
     while (true)
     {
