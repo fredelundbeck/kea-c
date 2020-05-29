@@ -2,8 +2,8 @@
 #include "slotmachine.h"
 #include "random.h"
 
-slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[], rule_t rules[], size_t rules_size)
-{
+slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[], rule_t rules[], unsigned char rules_size)
+{   
     /* 
     Allocate dynamic memory for the slotmachine struct.
     Because we use a flexible array member in the struct, we need to allocate
@@ -17,8 +17,9 @@ slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[
         return NULL;
     }
 
-    //Assign config to passed config.
+    //Assign config to passed config & rules_size
     slotmachine->config = config;
+    slotmachine->rules_size = rules_size;
 
     //Assign wheels array to passed wheels.
     for (size_t i = 0; i < MAX_WHEELS; i++)
@@ -27,7 +28,7 @@ slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[
     } 
     
     //Assign rules array to passed rules.
-    for (size_t i = 0; i < rules_size; i++)
+    for (unsigned char i = 0; i < rules_size; i++)
     {
         slotmachine->rules[i] = rules[i];
     }
@@ -70,7 +71,7 @@ wheel_t *create_wheel (symbol_t symbols[])
     return wheel;
 }
 
-rule_t create_rule (symbol_t symbols[], int price)
+rule_t create_rule (symbol_t symbols[], unsigned short int price)
 {
     //Declare and initialize rule struct
     rule_t rule = {

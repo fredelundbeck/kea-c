@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdint.h>
 #include "session.h"
 
 session_t *create_session(int credits)

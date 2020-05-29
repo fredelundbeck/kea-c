@@ -41,7 +41,7 @@ that tells which symbol is the current one.
 */
 typedef struct wheel
 {
-    int current_symbol;
+    unsigned char current_symbol;
     symbol_t symbols[MAX_SYMBOLS];
 } wheel_t;
 
@@ -52,7 +52,7 @@ which order of symbols - when rolled - pays back.
 typedef struct rule 
 {
     symbol_t symbols[MAX_WHEELS];
-    int price;
+    unsigned short int price;
 } rule_t;
 
 /*
@@ -63,6 +63,7 @@ typedef struct slotmachine
 {   
     wheel_t *wheels[MAX_WHEELS];
     slotmachine_config_t config;
+    unsigned char rules_size;
     //Flexible array member feature with C99
     rule_t rules[]; 
 } slotmachine_t;
@@ -73,11 +74,10 @@ These functions all allocate memory, for each struct,
 then initializes them with given arguments and returns
 the pointer.
 */
-
-slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[], rule_t rules[], size_t rules_size);
+slotmachine_t *create_slotmachine (slotmachine_config_t config, wheel_t *wheels[], rule_t rules[], unsigned char rules_size);
 slotmachine_config_t create_slotmachine_config (int spin_credit_price, int usd_credit_conversion);
 wheel_t *create_wheel (symbol_t symbols[]);
-rule_t create_rule (symbol_t symbols[], int price);
+rule_t create_rule (symbol_t symbols[], unsigned short int price);
 
 /*
 Creates a slotmachine struct with hardcoded values specific to the
@@ -91,7 +91,15 @@ That also means every struct that slotmachine has a pointer to.
 */
 void destroy_slotmachine(slotmachine_t *slotmachine);
 
+/*
+Spins the wheel given from argument.
+Spin meaning picking a random symbol
+from that wheels symbols array.
+
+@param wheel: the wheel to spin.
+*/
 void spin_wheel(wheel_t *wheel);
+
 
 #ifdef __cplusplus
 } // extern "C"

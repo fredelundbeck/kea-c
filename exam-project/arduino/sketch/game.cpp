@@ -74,6 +74,9 @@ bool continue_prompt()
 
 void start_game_loop(bool button_mode)
 {
+     unsigned short current_win_streak = 0;
+     unsigned short current_loss_streak = 0;
+
     //While user has enough credits to keep spinning
     while (session->credits >= slotmachine->config.spin_credit_price)
     {
@@ -98,7 +101,58 @@ void start_game_loop(bool button_mode)
             spin_wheel(slotmachine->wheels[i]);
         }
 
-        //Check if there's any winnings
+        /*
+        Check for any winnings.
+        Iterate through the slotmachine combinations backwards so that
+        we stop at the first and most valuable combination hit.
+        */
+        bool hit = false;
+        for (unsigned char i = slotmachine->rules_size; i > 0; i--)
+        {
+            /*
+            Check if each wheel's current symbol is equal to rules[i] symbols or if the symbol is -1 (wildcard) 
+            Kinda hacky to look at but gets the job done. With more time we could probably implement a better solution.
+            */
+            if ((slotmachine->wheels[0]->current_symbol == slotmachine->rules[i].symbols[0] || slotmachine->rules[i].symbols[0] == -1) &&
+                (slotmachine->wheels[1]->current_symbol == slotmachine->rules[i].symbols[1] || slotmachine->rules[i].symbols[1] == -1) &&
+                (slotmachine->wheels[2]->current_symbol == slotmachine->rules[i].symbols[2] || slotmachine->rules[i].symbols[2] == -1))
+            {
+                //Set hit bool to true
+                hit = true;
+
+                //Increment credits by the winning amount & break out of loop
+                session->credits += slotmachine->rules[i].price;
+                
+                //Reset loss streak & increment winning streak
+                current_loss_streak = 0;
+                current_win_streak += 1;
+
+                //Check if current win streak is longer than session win streak
+                if (current_win_streak > session->longest_win_streak)
+                {
+                    //Then assign session win streak to current win streak
+                    session->longest_win_streak = current_win_streak;
+                }
+                
+            }
+            
+        }
+        //Check if hit is still false
+        if (!hit)
+        {
+            //Increment current loss streak & reset current win streak
+            current_loss_streak += 1;
+            current_win_streak = 0;
+
+            //Check if current loss streak is longer than session loss streak
+            if (current_loss_streak > session->longest_loss_streak)
+            {
+                //Update session loss streak
+                session->longest_loss_streak = current_loss_streak;
+            }
+        }
+        
+        
         
         //Decrement credits by spin price
         session->credits -= slotmachine->config.spin_credit_price;
